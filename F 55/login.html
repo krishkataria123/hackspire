@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Glassmorphism Login and Sign Up Form</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+  <style media="screen">
+    *,
+    *:before,
+    *:after {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background-color: #121212;
+      font-family: 'Poppins', sans-serif;
+    }
+    .background {
+      width: 430px;
+      height: 520px;
+      position: absolute;
+      transform: translate(-50%, -50%);
+      left: 50%;
+      top: 50%;
+    }
+    .background .shape {
+      height: 200px;
+      width: 200px;
+      position: absolute;
+      border-radius: 50%;
+    }
+    .shape:first-child {
+      background: linear-gradient(#5DBB63, #4ca952);
+      left: -80px;
+      top: -80px;
+      opacity: 0.7;
+    }
+    .shape:last-child {
+      background: linear-gradient(to right, #5DBB63, #3e8e44);
+      right: -30px;
+      bottom: -80px;
+      opacity: 0.7;
+    }
+    form, .selection-form {
+      height: auto;
+      min-height: 520px;
+      width: 400px;
+      background-color: rgba(30, 30, 30, 0.8);
+      position: absolute;
+      transform: translate(-50%, -50%);
+      top: 50%;
+      left: 50%;
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(93, 187, 99, 0.2);
+      box-shadow: 0 0 40px rgba(93, 187, 99, 0.3);
+      padding: 50px 35px;
+      /* Add scroll if content is too long */
+       max-height: 90vh; 
+    }
+    form *, .selection-form * {
+      font-family: 'Poppins', sans-serif;
+      color: #ffffff;
+      letter-spacing: 0.5px;
+      outline: none;
+      border: none;
+    }
+    form h3, .selection-form h3 {
+      font-size: 32px;
+      font-weight: 500;
+      line-height: 42px;
+      text-align: center;
+      color: #5DBB63;
+      margin-bottom: 30px;
+    }
+    label {
+      display: block;
+      margin-top: 30px;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    input {
+      display: block;
+      height: 50px;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.07);
+      border-radius: 8px;
+      padding: 0 15px;
+      margin-top: 8px;
+      font-size: 14px;
+      font-weight: 300;
+      border: 1px solid rgba(93, 187, 99, 0.3);
+      transition: all 0.3s ease;
+    }
+    input:focus {
+      border-color: #5DBB63;
+      box-shadow: 0 0 0 3px rgba(93, 187, 99, 0.3);
+    }
+    ::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+    button, .user-type-btn {
+      margin-top: 30px;
+      width: 100%;
+      background-color: #5DBB63;
+      color: #ffffff;
+      padding: 15px 0;
+      font-size: 18px;
+      font-weight: 600;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(93, 187, 99, 0.3);
+    }
+    button:hover, .user-type-btn:hover {
+      background-color: #4ca952;
+      transform: translateY(-2px);
+      box-shadow: 0 7px 15px rgba(93, 187, 99, 0.4);
+    }
+    .social {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+    .social div {
+      width: 120px;
+      border-radius: 50px;
+      padding: 10px 0;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .social div:hover {
+      background-color: rgba(93, 187, 99, 0.3);
+    }
+    .social i {
+      margin-right: 8px;
+    }
+    .form-toggle {
+      text-align: center;
+      margin-top: 20px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+    .form-toggle a {
+      color: #5DBB63;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    .form-toggle a:hover {
+      color: #4ca952;
+      text-decoration: underline;
+    }
+    .user-type-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .user-type-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .back-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: rgba(93, 187, 99, 0.1);
+      border: 2px solid rgba(93, 187, 99, 0.3);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: #5DBB63;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .back-btn:hover {
+      background-color: rgba(93, 187, 99, 0.2);
+      color: #4ca952;
+      transform: scale(1.05);
+    }
+    /* Add this to your style section */
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+    form > *:not(.back-btn) {
+      flex-shrink: 0; /* Prevent elements from shrinking */
+    }
+    .form-toggle {
+      margin-top: auto; /* Push to bottom */
+      padding-top: 20px;
+    }
+    .social {
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+    .logo-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .logo {
+      width: 200px;
+      height: 200px;
+      object-fit: contain;
+      border-radius: 60%;
+    }
+  </style>
+</head>
+<body>
+  <div class="background">
+    <div class="shape"></div>
+    <div class="shape"></div>
+  </div>
+
+  <!-- User Type Selection -->
+  <div class="selection-form" id="selectionForm">
+    <div class="logo-container">
+      <!-- Replace with your actual logo path -->
+      <img src="logo.jpg" alt="App Logo" class="logo">
+    </div>
+    <h3>Select User Type</h3>
+    <div class="user-type-container">
+      <button class="user-type-btn" onclick="selectUserType('student')">
+        <i></i> I'm a Student
+      </button>
+      <button class="user-type-btn" onclick="selectUserType('society')">
+        <i></i> I'm a Society
+      </button>
+    </div>
+  </div>
+
+  <!-- Student Login Form -->
+  <form id="studentLoginForm" style="display: none;">
+    <button class="back-btn" onclick="goBackToSelection()"><i class="fas fa-arrow-left"></i></button>
+    <div class="logo-container">
+      
+    </div>
+    <h3>Student Login</h3>
+    <label for="studentUsername">Username</label>
+    <input type="text" placeholder="Email or Phone" id="studentUsername">
+    <label for="studentPassword">Password</label>
+    <input type="password" placeholder="Password" id="studentPassword">
+    <button onclick="redirectToStudent()">Log In</button>
+    <div class="social">
+      <div class="go"><i class="fab fa-google"></i> Google</div>
+      <div class="fb"><i class="fab fa-facebook"></i> Facebook</div>
+    </div>
+    <div class="form-toggle">
+      <p>Don't have an account? <a href="javascript:void(0)" onclick="toggleStudentForm()">Sign Up</a></p>
+    </div>
+  </form>
+
+  <!-- Student Sign Up Form -->
+  <form id="studentSignupForm" style="display: none;">
+    <button class="back-btn" onclick="goBackToSelection()"><i class="fas fa-arrow-left"></i></button>
+    <div class="logo-container">
+      <!-- <img src="https://via.placeholder.com/80x80?text=Logo" alt="App Logo" class="logo"> -->
+    </div>
+    <h3>Student Sign Up</h3>
+    <label for="studentSignupUsername">Username</label>
+    <input type="text" placeholder="Username" id="studentSignupUsername">
+    <label for="studentSignupEmail">Email</label>
+    <input type="email" placeholder="Email" id="studentSignupEmail">
+    <label for="studentSignupPassword">Password</label>
+    <input type="password" placeholder="Password" id="studentSignupPassword">
+    <button>Sign Up</button>
+    <div class="social">
+      <div class="go"><i class="fab fa-google"></i> Google</div>
+      <div class="fb"><i class="fab fa-facebook"></i> Facebook</div>
+    </div>
+    <div class="form-toggle">
+      <p>Already have an account? <a href="javascript:void(0)" onclick="toggleStudentForm()">Log In</a></p>
+    </div>
+  </form>
+
+  <!-- Society Login Form -->
+  <form id="societyLoginForm" style="display: none;">
+    <button class="back-btn" onclick="goBackToSelection()"><i class="fas fa-arrow-left"></i></button>
+    <div class="logo-container">
+      <!-- <img src="https://via.placeholder.com/80x80?text=Logo" alt="App Logo" class="logo"> -->
+    </div>
+    <h3>Society Login</h3>
+    <label for="societyUsername">Username</label>
+    <input type="text" placeholder="Email or Phone" id="societyUsername">
+    <label for="societyPassword">Password</label>
+    <input type="password" placeholder="Password" id="societyPassword">
+    <button onclick="redirectToSociety()">Log In</button>
+    <div class="social">
+      <div class="go"><i class="fab fa-google"></i> Google</div>
+      <div class="fb"><i class="fab fa-facebook"></i> Facebook</div>
+    </div>
+    <div class="form-toggle">
+      <p>Don't have an account? <a href="javascript:void(0)" onclick="toggleSocietyForm()">Sign Up</a></p>
+    </div>
+  </form>
+
+  <!-- Society Sign Up Form -->
+  <form id="societySignupForm" style="display: none;">
+    <button class="back-btn" onclick="goBackToSelection()"><i class="fas fa-arrow-left"></i></button>
+    <div class="logo-container">
+      <!-- <img src="https://via.placeholder.com/80x80?text=Logo" alt="App Logo" class="logo"> -->
+    </div>
+    <h3>Society Sign Up</h3>
+    <label for="societySignupName">Society Name</label>
+    <input type="text" placeholder="Society Name" id="societySignupName">
+    <label for="societySignupEmail">Email</label>
+    <input type="email" placeholder="Email" id="societySignupEmail">
+    <label for="societySignupPassword">Password</label>
+    <input type="password" placeholder="Password" id="societySignupPassword">
+    <button>Sign Up</button>
+    <div class="social">
+      <div class="go"><i class="fab fa-google"></i> Google</div>
+      <div class="fb"><i class="fab fa-facebook"></i> Facebook</div>
+    </div>
+    <div class="form-toggle">
+      <p>Already have an account? <a href="javascript:void(0)" onclick="toggleSocietyForm()">Log In</a></p>
+    </div>
+  </form>
+
+  <script>
+    let currentUserType = '';
+  
+    function selectUserType(userType) {
+      currentUserType = userType;
+      document.getElementById('selectionForm').style.display = 'none';
+      if (userType === 'student') {
+        document.getElementById('studentLoginForm').style.display = 'block';
+      } else {
+        document.getElementById('societyLoginForm').style.display = 'block';
+      }
+    }
+  
+    function goBackToSelection() {
+      document.getElementById('selectionForm').style.display = 'block';
+      document.getElementById('studentLoginForm').style.display = 'none';
+      document.getElementById('studentSignupForm').style.display = 'none';
+      document.getElementById('societyLoginForm').style.display = 'none';
+      document.getElementById('societySignupForm').style.display = 'none';
+    }
+  
+    function toggleStudentForm() {
+      const loginForm = document.getElementById('studentLoginForm');
+      const signupForm = document.getElementById('studentSignupForm');
+      if (loginForm.style.display === "none") {
+        loginForm.style.display = "block";
+        signupForm.style.display = "none";
+      } else {
+        loginForm.style.display = "none";
+        signupForm.style.display = "block";
+      }
+    }
+  
+    function toggleSocietyForm() {
+      const loginForm = document.getElementById('societyLoginForm');
+      const signupForm = document.getElementById('societySignupForm');
+      if (loginForm.style.display === "none") {
+        loginForm.style.display = "block";
+        signupForm.style.display = "none";
+      } else {
+        loginForm.style.display = "none";
+        signupForm.style.display = "block";
+      }
+    }
+    
+    function redirectToStudent() {
+      // Prevent form submission (for demo purposes)
+      event.preventDefault();
+      // Redirect to student page
+      window.location.href = "student.html";
+    }
+    
+    function redirectToSociety() {
+      // Prevent form submission (for demo purposes)
+      event.preventDefault();
+      // Redirect to society page
+      window.location.href = "society-main.html";
+    }
+  </script>
+</body>
+</html>

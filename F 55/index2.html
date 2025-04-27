@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Club Details</title>
+  <style>
+    /* ===== Modern Professional Styles ===== */
+    :root {
+      --primary: #5DBB63;
+      --primary-dark: #4CAF50;
+      --secondary: #3A7BD5;
+      --secondary-dark: #2A6BC5;
+      --text-light: #f8f9fa;
+      --text-dark: #212529;
+      --bg-light: #ffffff;
+      --bg-dark: #121212;
+      --card-light: #f8f8f8;
+      --card-dark: #1e1e1e;
+      --border-radius: 8px;
+      --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --box-shadow-dark: 0 4px 12px rgba(0, 0, 0, 0.3);
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    /* Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+      line-height: 1.6;
+      transition: var(--transition);
+      position: relative;
+      overflow-x: hidden;
+    }
+    
+    body.dark-mode {
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+    }
+
+    /* ===== Glow Effect ===== */
+    .glow-effect {
+      position: fixed;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(93, 187, 99, 0.15) 0%, rgba(93, 187, 99, 0) 70%);
+      border-radius: 50%;
+      z-index: -1;
+      animation: glowMove 15s infinite alternate;
+      pointer-events: none;
+    }
+
+    .glow-effect:nth-child(2) {
+      animation-delay: -5s;
+      animation-duration: 20s;
+      width: 400px;
+      height: 400px;
+      opacity: 0.7;
+    }
+
+    .glow-effect:nth-child(3) {
+      animation-delay: -10s;
+      animation-duration: 25s;
+      width: 200px;
+      height: 200px;
+      opacity: 0.5;
+      background: radial-gradient(circle, rgba(58, 123, 213, 0.15) 0%, rgba(58, 123, 213, 0) 70%);
+    }
+
+    @keyframes glowMove {
+      0% {
+        transform: translate(-50%, -50%);
+      }
+      25% {
+        transform: translate(50%, -30%);
+      }
+      50% {
+        transform: translate(20%, 40%);
+      }
+      75% {
+        transform: translate(-40%, 20%);
+      }
+      100% {
+        transform: translate(-10%, -30%);
+      }
+    }
+
+    .dark-mode .glow-effect {
+      opacity: 0.3;
+    }
+
+    .dark-mode .glow-effect:nth-child(3) {
+      background: radial-gradient(circle, rgba(126, 217, 87, 0.2) 0%, rgba(126, 217, 87, 0) 70%);
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      position: relative;
+      background-color: transparent;
+    }
+    
+    h1, h2, h3 {
+      color: var(--primary);
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    
+    .dark-mode h1, 
+    .dark-mode h2, 
+    .dark-mode h3 {
+      color: #7ED957;
+    }
+    
+    /* ===== Professional Header Buttons ===== */
+    .header-buttons {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      position: absolute;
+      top: 25px;
+      right: 25px;
+      z-index: 100;
+    }
+
+    /* Base Button Style */
+    .team-button {
+      padding: 12px 24px;
+      min-width: 160px;
+      border-radius: var(--border-radius);
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: none;
+      box-shadow: var(--box-shadow);
+    }
+
+    /* Primary Button */
+    .team-button.primary {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .team-button.primary:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(93, 187, 99, 0.3);
+    }
+
+    /* Secondary Button */
+    .team-button.secondary {
+      background-color: var(--secondary);
+      color: white;
+    }
+
+    .team-button.secondary:hover {
+      background-color: var(--secondary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(58, 123, 213, 0.3);
+    }
+
+    /* Dark Mode Adjustments */
+    .dark-mode .team-button.primary {
+      background-color: #7ED957;
+    }
+
+    .dark-mode .team-button.primary:hover {
+      background-color: #6EC947;
+    }
+
+    .dark-mode .team-button.secondary {
+      background-color: #4A8BE5;
+    }
+
+    .dark-mode .team-button.secondary:hover {
+      background-color: #3A7BD5;
+    }
+
+    /* Toggle Switch - Modern Version */
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .toggle-container {
+      position: relative;
+      width: 60px;
+      height: 30px;
+    }
+
+    .toggle-checkbox {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 34px;
+    }
+
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 22px;
+      width: 22px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    .toggle-checkbox:checked + .toggle-slider {
+      background-color: var(--primary);
+    }
+
+    .toggle-checkbox:checked + .toggle-slider:before {
+      transform: translateX(30px);
+    }
+
+    .dark-mode .toggle-checkbox:checked + .toggle-slider {
+      background-color: #7ED957;
+    }
+
+    /* Club Logo Section - Enhanced */
+    .club-logo-section {
+      display: flex;
+      justify-content: center;
+      margin: 80px 0 40px;
+      position: relative;
+    }
+
+    .club-logo-container {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .club-logo {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 50%;
+      border: 5px solid var(--primary);
+      padding: 15px;
+      background: white;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      transition: var(--transition);
+    }
+
+    .dark-mode .club-logo {
+      border-color: #7ED957;
+      background: var(--card-dark);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Event Banner - Premium Look */
+    .event-banner {
+      position: relative;
+      margin-bottom: 60px;
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--box-shadow);
+      transition: var(--transition);
+    }
+
+    .dark-mode .event-banner {
+      box-shadow: var(--box-shadow-dark);
+    }
+
+    .event-image {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .event-title {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
+      padding: 40px 30px;
+      text-align: center;
+    }
+
+    .event-title h1 {
+      color: white;
+      font-size: 3.5rem;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+      letter-spacing: 2px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .event-title p {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* About Section - Professional Card */
+    .about {
+      background-color: var(--card-light);
+      padding: 40px;
+      margin-bottom: 40px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      border-left: 5px solid var(--primary);
+      transition: var(--transition);
+    }
+
+    .dark-mode .about {
+      background-color: var(--card-dark);
+      box-shadow: var(--box-shadow-dark);
+      border-left-color: #7ED957;
+    }
+
+    .about h2 {
+      margin-bottom: 25px;
+      text-align: center;
+      font-size: 2.2rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      position: relative;
+      padding-bottom: 15px;
+    }
+
+    .about h2:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: var(--primary);
+    }
+
+    .dark-mode .about h2:after {
+      background: #7ED957;
+    }
+
+    .about p {
+      text-align: center;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      max-width: 800px;
+      margin: 0 auto;
+      color: var(--text-dark);
+    }
+
+    .dark-mode .about p {
+      color: #e0e0e0;
+    }
+
+    /* Gallery Section - Modern Grid */
+    .gallery {
+      margin-bottom: 60px;
+    }
+
+    .gallery h2 {
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 2.2rem;
+      text-transform: uppercase;
+      position: relative;
+      padding-bottom: 15px;
+    }
+
+    .gallery h2:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: var(--primary);
+    }
+
+    .dark-mode .gallery h2:after {
+      background: #7ED957;
+    }
+
+    .image-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 30px;
+    }
+
+    .gallery-item {
+      position: relative;
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--box-shadow);
+      transition: var(--transition);
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .dark-mode .gallery-item {
+      box-shadow: var(--box-shadow-dark);
+    }
+
+    .dark-mode .gallery-item:hover {
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .image-grid img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      display: block;
+      transition: var(--transition);
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.05);
+    }
+
+    /* Contact Section - Elegant Design */
+    .contact {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 50px 30px;
+      margin-bottom: 40px;
+      border-radius: var(--border-radius);
+      text-align: center;
+      box-shadow: var(--box-shadow);
+      transition: var(--transition);
+    }
+
+    .dark-mode .contact {
+      background: linear-gradient(135deg, #7ED957, #6EC947);
+    }
+
+    .contact h2 {
+      color: white;
+      margin-bottom: 25px;
+      font-size: 2rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .contact-info {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.1rem;
+    }
+
+    .contact-item i {
+      font-size: 1.3rem;
+    }
+
+    /* Social Section - Modern Links */
+    .social {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .social h2 {
+      margin-bottom: 30px;
+      font-size: 2rem;
+      text-transform: uppercase;
+      position: relative;
+      padding-bottom: 15px;
+    }
+
+    .social h2:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: var(--primary);
+    }
+
+    .dark-mode .social h2:after {
+      background: #7ED957;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 50px;
+      background-color: var(--card-light);
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: var(--transition);
+      box-shadow: var(--box-shadow);
+    }
+
+    .dark-mode .social-link {
+      background-color: var(--card-dark);
+      color: #7ED957;
+      box-shadow: var(--box-shadow-dark);
+    }
+
+    .social-link:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .dark-mode .social-link:hover {
+      background-color: #7ED957;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 992px) {
+      .event-title h1 {
+        font-size: 2.8rem;
+      }
+      
+      .event-title p {
+        font-size: 1rem;
+      }
+      
+      .about, .contact {
+        padding: 30px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header-buttons {
+        position: static;
+        justify-content: center;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+      }
+      
+      .club-logo-container {
+        width: 180px;
+        height: 180px;
+      }
+      
+      .event-title h1 {
+        font-size: 2.2rem;
+      }
+      
+      .event-image {
+        height: 300px;
+      }
+      
+      .image-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .about p {
+        text-align: left;
+      }
+      
+      .contact-info {
+        flex-direction: column;
+        gap: 20px;
+      }
+      
+      .social-links {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .social-link {
+        width: 100%;
+        max-width: 250px;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .container {
+        padding: 15px;
+      }
+      
+      .club-logo-container {
+        width: 150px;
+        height: 150px;
+      }
+      
+      .event-title {
+        padding: 25px 15px;
+      }
+      
+      .event-title h1 {
+        font-size: 1.8rem;
+      }
+      
+      .about h2, 
+      .gallery h2, 
+      .contact h2, 
+      .social h2 {
+        font-size: 1.8rem;
+      }
+      
+      .about, .contact {
+        padding: 25px 20px;
+      }
+
+      .glow-effect {
+        display: none; /* Disable glow on very small screens */
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Glow Effects -->
+  <div class="glow-effect"></div>
+  <div class="glow-effect"></div>
+  <div class="glow-effect"></div>
+
+  <div class="container">
+    <!-- Header Buttons - Professional Version -->
+    <div class="header-buttons">
+      <a href="team.html" class="team-button primary">
+        <i class="fas fa-users"></i>
+        Meet our Team
+      </a>
+      <a href="society-products.html" class="team-button secondary">
+        <i class="fas fa-box-open"></i>
+        Society Products
+      </a>
+      <div class="theme-toggle">
+        <span>Dark Mode</span>
+        <div class="toggle-container">
+          <input type="checkbox" id="theme-toggle" class="toggle-checkbox">
+          <label for="theme-toggle" class="toggle-slider"></label>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Club Logo Section -->
+    <section class="club-logo-section">
+      <div class="club-logo-container">
+        <img src="https://thaka.bing.com/th/id/OIP.-Q02bOQwxW2K_VOC1TZycwHaHa?rs=1&pid=ImgDetMain" alt="Club Logo" class="club-logo" />
+      </div>
+    </section>
+
+    <!-- Event Banner -->
+    <header class="event-banner">
+      <img src="https://hackspire-1.devfolio.co/_next/image?url=https%3A%2F%2Fassets.devfolio.co%2Fhackathons%2F8aafb4b132e74ecda8fb59b117321325%2Fassets%2Fcover%2F756.png&w=1440&q=100" alt="Event Banner" class="event-image" />
+      <div class="event-title">
+        <h1>Hackspire</h1>
+        <p>Annual 36-hour hackathon with prizes worth ₹1,00,000</p>
+      </div>
+    </header>
+
+    <!-- About Section -->
+    <section class="about">
+      <h2>About Hackspire</h2>
+      <p>
+        We at Microsoft Learn Student Chapter believe that youth
+        encompassed with appropriate technology holds the potential to
+        revolutionize the world we perceive today and we have done a
+        fair share in that through multiple events organised over the
+        years. Microsoft Learn Student Chapter was institutionalized by
+        the virtue of providing students a systemic platform for
+        cultivating technical skills and a spirit of teamwork. Our
+        vision is to create a community of computer enthusiasts with a
+        mindset of development.
+      </p>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery">
+      <h2>Gallery</h2>
+      <div class="image-grid">
+        <div class="gallery-item">
+          <img src="https://media.licdn.com/dms/image/v2/D5622AQEIepVibMUqOw/feedshare-shrink_2048_1536/feedshare-shrink_2048_1536/0/1724000263652?e=1748476800&v=beta&t=QVQBydAtW10U9TQviN0KJ-af-W9bWcaFi3odJce8PMQ" alt="Event 1" />
+        </div>
+        <div class="gallery-item">
+          <img src="MLSC[1].jpg" alt="Event 2" />
+        </div>
+        <div class="gallery-item">
+          <img src="Screenshot_2025-04-26_at_8.48.15 PM[1].png" alt="Event 3" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact">
+      <h2>Contact Us</h2>
+      <div class="contact-info">
+        <div class="contact-item">
+          <i class="fas fa-envelope"></i>
+          <span>msc@thapar.edu</span>
+        </div>
+        <div class="contact-item">
+          <i class="fas fa-phone"></i>
+          <span>+91 6467775476</span>
+        </div>
+        <div class="contact-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <span>Thapar University, Patiala</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Social Section -->
+    <section class="social">
+      <h2>Follow Us</h2>
+      <div class="social-links">
+        <a href="https://www.instagram.com/mlsc_tiet/" class="social-link">
+          <i class="fab fa-instagram"></i>
+          Instagram
+        </a>
+        <a href="https://www.facebook.com/Hackowasptsc/" class="social-link">
+          <i class="fab fa-facebook-f"></i>
+          Facebook
+        </a>
+        <a href="https://x.com/i/flow/login?redirect_after_login=%2FHackowasp_tiet" class="social-link">
+          <i class="fab fa-twitter"></i>
+          Twitter
+        </a>
+        <a href="https://www.linkedin.com/company/mlsc-tiet/" class="social-link">
+          <i class="fab fa-linkedin-in"></i>
+          LinkedIn
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <!-- Font Awesome for icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <script>
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    
+    // Check for saved theme preference or use preferred color scheme
+    const savedTheme = localStorage.getItem('theme') || 
+                     (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    
+    // Apply the saved theme
+    if (savedTheme === 'dark') {
+      body.classList.add('dark-mode');
+      themeToggle.checked = true;
+    }
+    
+    // Toggle theme when switch is clicked
+    themeToggle.addEventListener('change', function() {
+      if (this.checked) {
+        body.classList.add('dark-mode');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        body.classList.remove('dark-mode');
+        localStorage.setItem('theme', 'light');
+      }
+    });
+
+    // Add smooth scroll behavior
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+</body>
+</html>
