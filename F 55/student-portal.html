@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile | CampusConnect</title>
+    <style>
+        :root {
+            --primary: #5DBB63;
+            --dark-bg: #121212;
+            --dark-card: #1e1e1e;
+            --dark-text: #e0e0e0;
+            --dark-accent: #2a2a2a;
+            --cultural: #FF6B6B;
+            --sports: #4ECDC4;
+            --academic: #FFD166;
+            --tech: #5DBB63;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--dark-accent);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            background: linear-gradient(to right, var(--primary), #7DCE82);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .profile-section {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-name {
+            font-size: 2.2rem;
+            margin: 0 0 0.5rem 0;
+            font-weight: 700;
+        }
+
+        .profile-major {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .profile-bio {
+            opacity: 0.9;
+            line-height: 1.6;
+            max-width: 700px;
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .detail-card {
+            background: var(--dark-card);
+            border-radius: 8px;
+            padding: 1rem;
+            border-left: 3px solid var(--primary);
+        }
+
+        .detail-label {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-bottom: 0.3rem;
+        }
+
+        .detail-value {
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin: 2rem 0 1.5rem 0;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .event-card {
+            background: var(--dark-card);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+            border-top: 3px solid var(--primary);
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .event-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .event-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .event-type {
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            background: var(--tech);
+        }
+
+        .event-type.cultural {
+            background: var(--cultural);
+        }
+
+        .event-type.sports {
+            background: var(--sports);
+        }
+
+        .event-type.academic {
+            background: var(--academic);
+        }
+
+        .event-details {
+            margin-bottom: 1rem;
+        }
+
+        .event-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+        }
+
+        .event-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .event-icon {
+            opacity: 0.7;
+        }
+
+        .event-description {
+            opacity: 0.9;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .event-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.5rem;
+        }
+
+        .event-status {
+            font-size: 0.9rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 50px;
+            background: rgba(93, 187, 99, 0.2);
+            color: var(--primary);
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #4ca952;
+            box-shadow: 0 5px 15px rgba(93, 187, 99, 0.3);
+        }
+
+        .btn-outline {
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: rgba(93, 187, 99, 0.1);
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--dark-card);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .glow-effect {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(93, 187, 99, 0.15) 0%, rgba(93, 187, 99, 0) 70%);
+            border-radius: 50%;
+            z-index: -1;
+            animation: glowMove 12s infinite alternate;
+        }
+
+        @keyframes glowMove {
+            0% { transform: translate(-50%, -50%); }
+            25% { transform: translate(50%, -30%); }
+            50% { transform: translate(20%, 40%); }
+            75% { transform: translate(-40%, 20%); }
+            100% { transform: translate(-10%, -30%); }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            background: var(--dark-card);
+            border-radius: 12px;
+            opacity: 0.8;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .empty-state p {
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .profile-section {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .profile-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="glow-effect"></div>
+    <div class="glow-effect" style="animation-delay: -4s;"></div>
+    
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-user-graduate logo-icon"></i>
+                <span class="logo-text">Student Profile</span>
+            </div>
+            <button class="btn btn-outline">Edit Profile</button>
+        </header>
+        
+        <section class="profile-section">
+            <img src="https://tg-stockach.de/wp-content/uploads/2020/12/5f4d0f15338e20133dc69e95_dummy-profile-pic-300x300.png" alt="Profile Picture" class="profile-pic">
+            <div class="profile-info">
+                <h1 class="profile-name">Krish Kataria</h1>
+                <p class="profile-major">Computer Engineering</p>
+                
+                <div class="profile-details">
+                    <div class="detail-card">
+                        <div class="detail-label">Student Roll Number</div>
+                        <div class="detail-value">1024030051</div>
+                    </div>
+                    <div class="detail-card">
+                        <div class="detail-label">Email</div>
+                        <div class="detail-value">kk@thapar.edu</div>
+                    </div>
+                    <div class="detail-card">
+                        <div class="detail-label">Phone</div>
+                        <div class="detail-value">+91 8847355881</div>
+                    </div>
+                    <div class="detail-card">
+                        <div class="detail-label">Residence</div>
+                        <div class="detail-value">Adarsh Nagar, Fazilka</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats-section">
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-value" id="total-events">0</div>
+                    <div class="stat-label">Total Events</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="registered-events">0</div>
+                    <div class="stat-label">Registered</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="attended-events">0</div>
+                    <div class="stat-label">Attended</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="upcoming-events">0</div>
+                    <div class="stat-label">Upcoming</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="events-section">
+            <h2 class="section-title">Registered Events</h2>
+            <div class="events-grid" id="registered-events-container">
+                <!-- Events will be loaded here dynamically -->
+                <div class="empty-state">
+                    <i class="fas fa-calendar-plus"></i>
+                    <p>No events registered yet</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="events-section">
+            <h2 class="section-title">Attended Events</h2>
+            <div class="events-grid" id="attended-events-container">
+                <!-- Events will be loaded here dynamically -->
+                <div class="empty-state">
+                    <i class="fas fa-calendar-check"></i>
+                    <p>No events attended yet</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sample data - in a real app, this would come from a database
+            const studentData = {
+                registeredEvents: [1, 3], // IDs of registered events
+                attendedEvents: [3]       // IDs of attended events
+            };
+
+            // Get events from localStorage (posted from society.html)
+            const allEvents = JSON.parse(localStorage.getItem('societyEvents')) || [];
+            
+            // Filter events based on student's registration and attendance
+            const registeredEvents = allEvents.filter(event => 
+                studentData.registeredEvents.includes(allEvents.indexOf(event))
+            );
+            
+            const attendedEvents = allEvents.filter(event => 
+                studentData.attendedEvents.includes(allEvents.indexOf(event))
+            );
+            
+            // Update stats
+            document.getElementById('total-events').textContent = allEvents.length;
+            document.getElementById('registered-events').textContent = registeredEvents.length;
+            document.getElementById('attended-events').textContent = attendedEvents.length;
+            document.getElementById('upcoming-events').textContent = 
+                registeredEvents.length - attendedEvents.length;
+            
+            // Display registered events
+            const registeredContainer = document.getElementById('registered-events-container');
+            if (registeredEvents.length > 0) {
+                registeredContainer.innerHTML = '';
+                registeredEvents.forEach(event => {
+                    registeredContainer.appendChild(createEventCard(event, false));
+                });
+            }
+            
+            // Display attended events
+            const attendedContainer = document.getElementById('attended-events-container');
+            if (attendedEvents.length > 0) {
+                attendedContainer.innerHTML = '';
+                attendedEvents.forEach(event => {
+                    attendedContainer.appendChild(createEventCard(event, true));
+                });
+            }
+            
+            // Helper function to create event cards
+            function createEventCard(event, isAttended) {
+                const card = document.createElement('div');
+                card.className = 'event-card';
+                
+                const typeClass = event.category.toLowerCase() === 'cultural' ? 'cultural' :
+                                 event.category.toLowerCase() === 'sports' ? 'sports' :
+                                 event.category.toLowerCase() === 'technical' ? 'tech' : 'academic';
+                
+                card.innerHTML = `
+                    <div class="event-header">
+                        <h3 class="event-title">${event.title}</h3>
+                        <span class="event-type ${typeClass}">${event.category}</span>
+                    </div>
+                    <div class="event-details">
+                        <div class="event-meta">
+                            <div class="event-meta-item">
+                                <i class="fas fa-calendar-day event-icon"></i>
+                                <span>${new Date(event.startDate).toLocaleDateString()}</span>
+                            </div>
+                            <div class="event-meta-item">
+                                <i class="fas fa-clock event-icon"></i>
+                                <span>${event.startTime} - ${event.endTime}</span>
+                            </div>
+                        </div>
+                        <div class="event-meta">
+                            <div class="event-meta-item">
+                                <i class="fas fa-map-marker-alt event-icon"></i>
+                                <span>${event.venue}</span>
+                            </div>
+                        </div>
+                        <p class="event-description">${event.description}</p>
+                    </div>
+                    <div class="event-actions">
+                        <span class="event-status">${isAttended ? 'Attended' : 'Registered'}</span>
+                        ${isAttended ? 
+                            '<button class="btn btn-outline">Leave Feedback</button>' : 
+                            '<button class="btn btn-primary">View Details</button>'}
+                    </div>
+                `;
+                
+                return card;
+            }
+        });
+    </script>
+</body>
+</html>

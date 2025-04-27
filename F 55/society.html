@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EventHub | Society Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #121212;
+      color: #fff;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .glow-effect {
+      position: fixed;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(93, 187, 99, 0.15) 0%, rgba(93, 187, 99, 0) 70%);
+      border-radius: 50%;
+      z-index: -1;
+      animation: glowMove 12s infinite alternate;
+    }
+
+    .glow-effect:nth-child(2) {
+      animation-delay: -4s;
+      opacity: 0.7;
+    }
+
+    .glow-effect:nth-child(3) {
+      animation-delay: -8s;
+      opacity: 0.5;
+      width: 200px;
+      height: 200px;
+    }
+
+    @keyframes glowMove {
+      0% { transform: translate(-50%, -50%); }
+      25% { transform: translate(50%, -30%); }
+      50% { transform: translate(20%, 40%); }
+      75% { transform: translate(-40%, 20%); }
+      100% { transform: translate(-10%, -30%); }
+    }
+
+    .header {
+      text-align: center;
+      padding: 60px 20px 100px;
+      background: rgba(0, 0, 0, 0.7);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      z-index: 1;
+    }
+
+    .header h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      background: linear-gradient(to right, #5DBB63, #7DCE82);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .header p {
+      font-size: 1.2rem;
+      opacity: 0.8;
+    }
+
+    .container {
+      max-width: 750px;
+      margin: -60px auto 50px;
+      padding: 40px;
+      background: rgba(30, 30, 30, 0.8);
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3), 
+                  0 0 30px rgba(93, 187, 99, 0.1) inset;
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      z-index: 1;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2rem;
+      color: #fff;
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: #5DBB63;
+      border-radius: 3px;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #eee;
+      font-size: 0.95rem;
+    }
+
+    .input-container {
+      position: relative;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 14px 40px 14px 14px;
+      border: none;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      font-size: 16px;
+      font-family: 'Montserrat', sans-serif;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    textarea {
+      padding: 14px;
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #aaa;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(93, 187, 99, 0.3);
+      box-shadow: 0 0 0 2px rgba(93, 187, 99, 0.2);
+    }
+
+    .input-icon {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #5DBB63;
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    button {
+      margin-top: 30px;
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 10px;
+      background-color: #5DBB63;
+      color: white;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(93, 187, 99, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      background-color: #4ca952;
+      box-shadow: 0 8px 20px rgba(93, 187, 99, 0.4);
+    }
+
+    button:active {
+      transform: translateY(1px);
+    }
+
+    .success-message {
+      display: none;
+      background: rgba(93, 187, 99, 0.2);
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 25px;
+      text-align: center;
+      border: 1px solid rgba(93, 187, 99, 0.5);
+      color: #fff;
+      font-weight: 500;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 30px 20px;
+        margin: -60px 20px 50px;
+      }
+      
+      .header h1 {
+        font-size: 2.2rem;
+      }
+      
+      h2 {
+        font-size: 1.6rem;
+      }
+      
+      input, select, textarea {
+        padding: 12px 36px 12px 12px;
+      }
+      
+      .input-icon {
+        right: 12px;
+        font-size: 0.9rem;
+      }
+    }
+    .img-logo img{
+      height: 150px;
+      width: 150px;
+      border: 2px solid white;
+      border-radius: 55%
+    }
+  </style>
+</head>
+<body>
+  <div class="glow-effect"></div>
+  <div class="glow-effect"></div>
+  <div class="glow-effect"></div>
+
+  <div class="header">
+    <div class="img-logo">
+      <img src="logo.jpg" alt="">
+    </div>
+    <h1>Society Portal</h1>
+    <p>Your Event Posting Space</p>
+  </div>
+
+  <div class="container">
+    <h2>Post a New Event</h2>
+    <form id="event-form">
+      <div class="form-group">
+        <label for="eventTitle">Event Title</label>
+        <div class="input-container">
+          <input type="text" id="eventTitle" placeholder="Enter event title" required />
+          <i class="fas fa-heading input-icon"></i>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="eventDesc">Description</label>
+        <textarea id="eventDesc" placeholder="Brief description of your event" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="eventCategory">Category</label>
+        <div class="input-container">
+          <select id="eventCategory" required>
+            <option value="">Select Category</option>
+            <option value="Cultural">Cultural</option>
+            <option value="Technical">Technical</option>
+            <option value="Workshop">Workshop</option>
+            <option value="Sports">Sports</option>
+          </select>
+          <i class="fas fa-tag input-icon"></i>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="eventStartDate">Start Date</label>
+        <div class="input-container">
+          <input type="date" id="eventStartDate" required />
+          <i class="fas fa-calendar-day input-icon"></i>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="eventStartTime">Start Time</label>
+        <div class="input-container">
+          <input type="time" id="eventStartTime" required />
+          <i class="fas fa-clock input-icon"></i>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="eventEndTime">End Time</label>
+        <div class="input-container">
+          <input type="time" id="eventEndTime" required />
+          <i class="fas fa-clock input-icon"></i>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="eventVenue">Venue</label>
+        <div class="input-container">
+          <input type="text" id="eventVenue" placeholder="e.g., Main Auditorium" required />
+          <i class="fas fa-map-marker-alt input-icon"></i>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="eventImage">Event Poster URL</label>
+        <div class="input-container">
+          <input type="url" id="eventImage" placeholder="https://example.com/image.jpg" />
+          <i class="fas fa-image input-icon"></i>
+        </div>
+      </div>
+
+      <button type="submit">
+        <i class="fas fa-paper-plane"></i> Post Event
+      </button>
+      <div id="success-message" class="success-message">
+        <i class="fas fa-check-circle"></i> Event posted successfully!
+      </div>
+    </form>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const eventForm = document.getElementById('event-form');
+      const successMessage = document.getElementById('success-message');
+
+      eventForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        // Get form data
+        const eventData = {
+          title: document.getElementById('eventTitle').value,
+          description: document.getElementById('eventDesc').value,
+          category: document.getElementById('eventCategory').value,
+          startDate: document.getElementById('eventStartDate').value,
+          startTime: document.getElementById('eventStartTime').value,
+          endTime: document.getElementById('eventEndTime').value,
+          venue: document.getElementById('eventVenue').value,
+          imageUrl: document.getElementById('eventImage').value || 'https://via.placeholder.com/600x400?text=Event+Poster',
+          timestamp: new Date().toISOString(),
+          society: "Your Society Name" // You can modify this to get from logged in society
+        };
+
+        // Get existing events or initialize empty array
+        const existingEvents = JSON.parse(localStorage.getItem('societyEvents')) || [];
+        
+        // Add new event
+        existingEvents.unshift(eventData);
+        
+        // Save back to localStorage
+        localStorage.setItem('societyEvents', JSON.stringify(existingEvents));
+        
+        // Clear form
+        eventForm.reset();
+        
+        // Show success message
+        successMessage.style.display = 'block';
+        setTimeout(() => {
+          successMessage.style.display = 'none';
+        }, 3000);
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sponsorship Portal | CampusConnect</title>
+    <style>
+        :root {
+            --primary: #5DBB63;
+            --dark-bg: #121212;
+            --dark-card: #1e1e1e;
+            --dark-text: #e0e0e0;
+            --dark-accent: #2a2a2a;
+            --cultural: #FF6B6B;
+            --sports: #4ECDC4;
+            --academic: #FFD166;
+            --tech: #5DBB63;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--dark-accent);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            background: linear-gradient(to right, var(--primary), #7DCE82);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin: 2rem 0 1.5rem 0;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .sponsorship-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .sponsorship-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .sponsorship-column {
+            background: var(--dark-card);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            border-top: 3px solid var(--primary);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="url"],
+        input[type="date"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border-radius: 6px;
+            border: 1px solid var(--dark-accent);
+            background: #2a2a2a;
+            color: var(--dark-text);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            transition: border 0.3s ease;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .checkbox-group {
+            margin-top: 1rem;
+        }
+
+        .checkbox-item {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .checkbox-item input {
+            margin-right: 0.8rem;
+        }
+
+        .checkbox-item label {
+            margin-bottom: 0;
+            font-weight: normal;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #4ca952;
+            box-shadow: 0 5px 15px rgba(93, 187, 99, 0.3);
+        }
+
+        .btn-outline {
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: rgba(93, 187, 99, 0.1);
+        }
+
+        .benefits-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(93, 187, 99, 0.1);
+            border-radius: 8px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .benefit-item {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+        }
+
+        .benefit-icon {
+            color: var(--primary);
+            margin-top: 0.2rem;
+        }
+
+        .benefit-text {
+            flex: 1;
+        }
+
+        .glow-effect {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(93, 187, 99, 0.15) 0%, rgba(93, 187, 99, 0) 70%);
+            border-radius: 50%;
+            z-index: -1;
+            animation: glowMove 12s infinite alternate;
+        }
+
+        @keyframes glowMove {
+            0% { transform: translate(-50%, -50%); }
+            25% { transform: translate(50%, -30%); }
+            50% { transform: translate(20%, 40%); }
+            75% { transform: translate(-40%, 20%); }
+            100% { transform: translate(-10%, -30%); }
+        }
+
+        .success-message {
+            display: none;
+            padding: 1.5rem;
+            background: rgba(93, 187, 99, 0.2);
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border-left: 3px solid var(--primary);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="glow-effect"></div>
+    <div class="glow-effect" style="animation-delay: -4s;"></div>
+    
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-handshake logo-icon"></i>
+                <span class="logo-text">Sponsorship Portal</span>
+            </div>
+            <button class="btn btn-outline" onclick="window.location.href='society-main.html'">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </button>
+        </header>
+
+        <div id="successMessage" class="success-message">
+            <i class="fas fa-check-circle" style="color: var(--primary); margin-right: 0.5rem;"></i>
+            <span id="successText">Your submission has been received!</span>
+        </div>
+
+        <section>
+            <h2 class="section-title">Sponsorship Opportunities</h2>
+            <p style="opacity: 0.9; margin-bottom: 2rem;">
+                Connect with potential sponsors for your events or explore sponsorship opportunities for our society.
+            </p>
+            
+            <div class="sponsorship-container">
+                <div class="sponsorship-column">
+                    <h3 style="margin-top: 0; margin-bottom: 1.5rem; font-size: 1.3rem;">
+                        <i class="fas fa-hands-helping" style="color: var(--primary); margin-right: 0.5rem;"></i>
+                        Request Sponsorship
+                    </h3>
+                    
+                    <form id="requestForm">
+                        <div class="form-group">
+                            <label for="eventName">Event/Project Name</label>
+                            <input type="text" id="eventName" name="eventName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="eventCategory">Event Category</label>
+                            <select id="eventCategory" name="eventCategory" required>
+                                <option value="">Select category</option>
+                                <option value="technical">Technical</option>
+                                <option value="cultural">Cultural</option>
+                                <option value="sports">Sports</option>
+                                <option value="academic">Academic</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="eventDate">Event Date</label>
+                            <input type="date" id="eventDate" name="eventDate" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="sponsorshipType">Type of Sponsorship Needed</label>
+                            <select id="sponsorshipType" name="sponsorshipType" required>
+                                <option value="">Select type</option>
+                                <option value="financial">Financial Support</option>
+                                <option value="goods">Goods/Products</option>
+                                <option value="services">Services</option>
+                                <option value="venue">Venue/Space</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="sponsorshipAmount">Estimated Value (if financial)</label>
+                            <input type="number" id="sponsorshipAmount" name="sponsorshipAmount" placeholder="₹">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="eventDescription">Event Description</label>
+                            <textarea id="eventDescription" name="eventDescription" required></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="sponsorBenefits">Benefits for Sponsor</label>
+                            <textarea id="sponsorBenefits" name="sponsorBenefits" required 
+                                      placeholder="What recognition or benefits will the sponsor receive?"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Target Audience</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="audienceStudents" name="audienceStudents" checked>
+                                    <label for="audienceStudents">Students</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="audienceFaculty" name="audienceFaculty">
+                                    <label for="audienceFaculty">Faculty Members</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="audienceAlumni" name="audienceAlumni">
+                                    <label for="audienceAlumni">Alumni Network</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="audienceCommunity" name="audienceCommunity">
+                                    <label for="audienceCommunity">Local Community</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Submit Request
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="sponsorship-column">
+                    <h3 style="margin-top: 0; margin-bottom: 1.5rem; font-size: 1.3rem;">
+                        <i class="fas fa-bullhorn" style="color: var(--primary); margin-right: 0.5rem;"></i>
+                        Offer Sponsorship
+                    </h3>
+                    
+                    <form id="offerForm">
+                        <div class="form-group">
+                            <label for="companyName">Company/Organization Name</label>
+                            <input type="text" id="companyName" name="companyName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contactName">Contact Person</label>
+                            <input type="text" id="contactName" name="contactName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contactEmail">Email Address</label>
+                            <input type="email" id="contactEmail" name="contactEmail" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contactPhone">Phone Number</label>
+                            <input type="tel" id="contactPhone" name="contactPhone">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="companyWebsite">Website (optional)</label>
+                            <input type="url" id="companyWebsite" name="companyWebsite">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="offerType">Type of Sponsorship Offered</label>
+                            <select id="offerType" name="offerType" required>
+                                <option value="">Select type</option>
+                                <option value="financial">Financial Support</option>
+                                <option value="goods">Goods/Products</option>
+                                <option value="services">Services</option>
+                                <option value="venue">Venue/Space</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="offerValue">Estimated Value (if applicable)</label>
+                            <input type="number" id="offerValue" name="offerValue" placeholder="₹">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="targetCategories">Preferred Event Categories</label>
+                            <select id="targetCategories" name="targetCategories" multiple>
+                                <option value="technical">Technical</option>
+                                <option value="cultural">Cultural</option>
+                                <option value="sports">Sports</option>
+                                <option value="academic">Academic</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="sponsorGoals">Your Sponsorship Goals</label>
+                            <textarea id="sponsorGoals" name="sponsorGoals" 
+                                      placeholder="What are your marketing or branding objectives?"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-handshake"></i> Submit Offer
+                        </button>
+                    </form>
+                    
+                    <div class="benefits-section">
+                        <h4 style="margin-top: 0; margin-bottom: 1rem; color: var(--primary);">
+                            <i class="fas fa-star benefit-icon"></i> Why Sponsor Our Society?
+                        </h4>
+                        
+                        <div class="benefit-item">
+                            <i class="fas fa-eye benefit-icon"></i>
+                            <div class="benefit-text">
+                                <strong>Brand Visibility:</strong> Reach our engaged audience of students, faculty, and alumni.
+                            </div>
+                        </div>
+                        
+                        <div class="benefit-item">
+                            <i class="fas fa-users benefit-icon"></i>
+                            <div class="benefit-text">
+                                <strong>Community Engagement:</strong> Demonstrate your commitment to education and student development.
+                            </div>
+                        </div>
+                        
+                        <div class="benefit-item">
+                            <i class="fas fa-network-wired benefit-icon"></i>
+                            <div class="benefit-text">
+                                <strong>Networking Opportunities:</strong> Connect with future professionals in your industry.
+                            </div>
+                        </div>
+                        
+                        <div class="benefit-item">
+                            <i class="fas fa-bullseye benefit-icon"></i>
+                            <div class="benefit-text">
+                                <strong>Targeted Marketing:</strong> Access specific demographics that align with your customer base.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Form submission handling
+            document.getElementById('requestForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                showSuccess('Your sponsorship request has been submitted successfully!');
+                this.reset();
+            });
+            
+            document.getElementById('offerForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                showSuccess('Thank you for your sponsorship offer! We will contact you shortly.');
+                this.reset();
+            });
+            
+            function showSuccess(message) {
+                const successDiv = document.getElementById('successMessage');
+                document.getElementById('successText').textContent = message;
+                successDiv.style.display = 'block';
+                
+                // Hide after 5 seconds
+                setTimeout(() => {
+                    successDiv.style.display = 'none';
+                }, 5000);
+            }
+            
+            // Make multiple select look better
+            const multiSelect = document.getElementById('targetCategories');
+            multiSelect.style.height = 'auto';
+            multiSelect.style.padding = '0.5rem';
+            multiSelect.style.minHeight = '100px';
+        });
+    </script>
+</body>
+</html>

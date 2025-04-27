@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Society Updates | CampusConnect</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --primary: #5DBB63;
+      --dark-bg: #121212;
+      --dark-card: #1e1e1e;
+      --dark-text: #e0e0e0;
+      --dark-accent: #2a2a2a;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--dark-bg);
+      color: var(--dark-text);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .glow-effect {
+      position: fixed;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(93, 187, 99, 0.15) 0%, rgba(93, 187, 99, 0) 70%);
+      border-radius: 50%;
+      z-index: -1;
+      animation: glowMove 12s infinite alternate;
+    }
+
+    .glow-effect:nth-child(2) {
+      animation-delay: -4s;
+      opacity: 0.7;
+    }
+
+    .glow-effect:nth-child(3) {
+      animation-delay: -8s;
+      opacity: 0.5;
+      width: 200px;
+      height: 200px;
+    }
+
+    @keyframes glowMove {
+      0% { transform: translate(-50%, -50%); }
+      25% { transform: translate(50%, -30%); }
+      50% { transform: translate(20%, 40%); }
+      75% { transform: translate(-40%, 20%); }
+      100% { transform: translate(-10%, -30%); }
+    }
+
+    .header {
+      text-align: center;
+      padding: 40px 20px 80px;
+      background: rgba(0, 0, 0, 0.7);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      z-index: 1;
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      background: linear-gradient(to right, var(--primary), #7DCE82);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .header p {
+      font-size: 1.1rem;
+      opacity: 0.8;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: -50px auto 50px;
+      padding: 30px;
+      background: rgba(30, 30, 30, 0.8);
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3), 
+                  0 0 30px rgba(93, 187, 99, 0.1) inset;
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      z-index: 1;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 1.8rem;
+      color: var(--dark-text);
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: var(--primary);
+      border-radius: 3px;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 500;
+      color: var(--dark-text);
+      font-size: 1rem;
+    }
+
+    .input-container {
+      position: relative;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 14px 40px 14px 15px;
+      border: none;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--dark-text);
+      font-size: 16px;
+      font-family: 'Montserrat', sans-serif;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    textarea {
+      min-height: 150px;
+      resize: vertical;
+      padding: 15px;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(93, 187, 99, 0.3);
+      box-shadow: 0 0 0 2px rgba(93, 187, 99, 0.2);
+    }
+
+    .input-icon {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--primary);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .btn {
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+      border: none;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+      box-shadow: 0 5px 15px rgba(93, 187, 99, 0.3);
+      width: 100%;
+    }
+
+    .btn-primary:hover {
+      background-color: #4ca952;
+      box-shadow: 0 8px 20px rgba(93, 187, 99, 0.4);
+      transform: translateY(-3px);
+    }
+
+    .btn-primary:active {
+      transform: translateY(1px);
+    }
+
+    .success-message {
+      display: none;
+      background: rgba(93, 187, 99, 0.2);
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 25px;
+      text-align: center;
+      border: 1px solid rgba(93, 187, 99, 0.5);
+      color: var(--dark-text);
+      font-weight: 500;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .post-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .option-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      padding: 15px;
+      border-left: 3px solid var(--primary);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .option-card:hover {
+      background: rgba(93, 187, 99, 0.1);
+    }
+
+    .option-card.selected {
+      background: rgba(93, 187, 99, 0.2);
+      border-left: 3px solid var(--primary);
+    }
+
+    .option-card i {
+      color: var(--primary);
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 25px 20px;
+        margin: -50px 20px 50px;
+      }
+      
+      .header h1 {
+        font-size: 2rem;
+      }
+      
+      h2 {
+        font-size: 1.5rem;
+      }
+      
+      .post-options {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="glow-effect"></div>
+  <div class="glow-effect"></div>
+  <div class="glow-effect"></div>
+
+  <div class="header">
+    <h1>Society Updates</h1>
+    <p>Share important announcements with students</p>
+  </div>
+
+  <div class="container">
+    <h2>Create New Post</h2>
+    <form id="post-form">
+      <div class="form-group">
+        <label for="postTitle">Post Title</label>
+        <div class="input-container">
+          <input type="text" id="postTitle" placeholder="Enter post title" required />
+          <i class="fas fa-heading input-icon"></i>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Post Type</label>
+        <div class="post-options">
+          <div class="option-card" onclick="selectOption(this, 'announcement')">
+            <i class="fas fa-bullhorn"></i>
+            <h3>Announcement</h3>
+            <p>Important society updates</p>
+          </div>
+          <div class="option-card" onclick="selectOption(this, 'event')">
+            <i class="fas fa-calendar-alt"></i>
+            <h3>Event</h3>
+            <p>Upcoming society events</p>
+          </div>
+          <div class="option-card" onclick="selectOption(this, 'achievement')">
+            <i class="fas fa-trophy"></i>
+            <h3>Achievement</h3>
+            <p>Society accomplishments</p>
+          </div>
+        </div>
+        <input type="hidden" id="postType" value="announcement" />
+      </div>
+
+      <div class="form-group">
+        <label for="postContent">Post Content</label>
+        <textarea id="postContent" placeholder="Write your update here..." required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="postImage">Image URL (Optional)</label>
+        <div class="input-container">
+          <input type="url" id="postImage" placeholder="https://example.com/image.jpg" />
+          <i class="fas fa-image input-icon"></i>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="postLink">Related Link (Optional)</label>
+        <div class="input-container">
+          <input type="url" id="postLink" placeholder="https://example.com" />
+          <i class="fas fa-link input-icon"></i>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary">
+        <i class="fas fa-paper-plane"></i> Publish Post
+      </button>
+      <div id="success-message" class="success-message">
+        <i class="fas fa-check-circle"></i> Your post has been published successfully!
+      </div>
+    </form>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const postForm = document.getElementById('post-form');
+      const successMessage = document.getElementById('success-message');
+
+      // Set default option as selected
+      document.querySelector('.option-card').classList.add('selected');
+
+      postForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        // Get form data
+        const postData = {
+          title: document.getElementById('postTitle').value,
+          type: document.getElementById('postType').value,
+          content: document.getElementById('postContent').value,
+          imageUrl: document.getElementById('postImage').value,
+          link: document.getElementById('postLink').value,
+          timestamp: new Date().toISOString(),
+          society: "Your Society Name" // This would come from logged in society
+        };
+
+        // In a real app, this would send to a server
+        console.log('Post data:', postData);
+        
+        // Show success message
+        successMessage.style.display = 'block';
+        setTimeout(() => {
+          successMessage.style.display = 'none';
+        }, 3000);
+        
+        // Clear form
+        postForm.reset();
+        // Reset option selection
+        document.querySelector('.option-card').classList.add('selected');
+        document.getElementById('postType').value = 'announcement';
+      });
+    });
+
+    function selectOption(card, type) {
+      // Remove selected class from all options
+      document.querySelectorAll('.option-card').forEach(option => {
+        option.classList.remove('selected');
+      });
+      
+      // Add selected class to clicked option
+      card.classList.add('selected');
+      
+      // Update hidden input value
+      document.getElementById('postType').value = type;
+    }
+  </script>
+</body>
+</html>

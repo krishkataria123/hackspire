@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Society Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #5DBB63;
+            --secondary-color: #4a8cff;
+            --dark-bg: #121212;
+            --light-bg: #f5f7fa;
+            --card-bg: #ffffff;
+            --text-dark: #333333;
+            --text-light: #f5f5f5;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] body {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        [data-theme="dark"] header {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .header-title {
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .header-title span {
+            color: var(--primary-color);
+        }
+
+        .theme-toggle {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+        }
+
+        .sidebar {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            height: fit-content;
+        }
+
+        [data-theme="dark"] .sidebar {
+            background: #1e1e1e;
+        }
+
+        .society-info {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .society-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1rem;
+            border: 3px solid var(--primary-color);
+        }
+
+        .society-name {
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .society-members {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        [data-theme="dark"] .society-members {
+            color: #aaa;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        [data-theme="dark"] .nav-link {
+            color: var(--text-light);
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(93, 187, 99, 0.1);
+            color: var(--primary-color);
+        }
+
+        .nav-link i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        [data-theme="dark"] .stat-card {
+            background: #1e1e1e;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .stat-icon.posts {
+            background: var(--primary-color);
+        }
+
+        .stat-icon.events {
+            background: #ff6b6b;
+        }
+
+        .stat-icon.feedback {
+            background: var(--secondary-color);
+        }
+
+        .stat-icon.sponsors {
+            background: #ffa502;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        [data-theme="dark"] .stat-label {
+            color: #aaa;
+        }
+
+        .quick-actions {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        [data-theme="dark"] .quick-actions {
+            background: #1e1e1e;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .action-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem 1rem;
+            border-radius: 8px;
+            background: rgba(93, 187, 99, 0.1);
+            border: 1px dashed var(--primary-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: var(--text-dark);
+        }
+
+        [data-theme="dark"] .action-btn {
+            color: var(--text-light);
+        }
+
+        .action-btn:hover {
+            background: rgba(93, 187, 99, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .action-btn i {
+            font-size: 1.8rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary-color);
+        }
+
+        .action-label {
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .recent-activity {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        [data-theme="dark"] .recent-activity {
+            background: #1e1e1e;
+        }
+
+        .activity-list {
+            list-style: none;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        [data-theme="dark"] .activity-item {
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            background: rgba(93, 187, 99, 0.1);
+            color: var(--primary-color);
+            flex-shrink: 0;
+        }
+
+        .activity-content {
+            flex-grow: 1;
+        }
+
+        .activity-title {
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+        }
+
+        .activity-time {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        [data-theme="dark"] .activity-time {
+            color: #aaa;
+        }
+
+        @media (max-width: 992px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Notification badge */
+        .badge {
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            margin-left: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="header-title">Society <span>Dashboard</span></h1>
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+                <span>Dark Mode</span>
+            </button>
+        </header>
+
+        <div class="dashboard">
+            <aside class="sidebar">
+                <div class="society-info">
+                    <img src="https://thaka.bing.com/th/id/OIP.-Q02bOQwxW2K_VOC1TZycwHaHa?rs=1&pid=ImgDetMain" alt="Society Logo" class="society-logo">
+                    <h3 class="society-name">MLSC</h3>
+                    <p class="society-members">500 members</p>
+                </div>
+
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active">
+                            <i class="fas fa-tachometer-alt"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="post.html" class="nav-link">
+                            <i class="fas fa-newspaper"></i>
+                            Posts
+                            
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="society.html" class="nav-link">
+                            <i class="fas fa-calendar-alt"></i>
+                            Events 
+                            
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="feedback-management.html" class="nav-link">
+                            <i class="fas fa-comment-dots"></i>
+                            Feedback
+                            
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="team.html" class="nav-link">
+                            <i class="fas fa-users"></i>
+                            Members
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="sponsership.html" class="nav-link">
+                            <i class="fas fa-handshake"></i>
+                            Sponsorship
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="society-portal.html" class="nav-link">
+                            <i class="fas fa-cog"></i>
+                            Settings
+                        </a>
+                    </li>
+                </ul>
+            </aside>
+
+            <main class="main-content">
+                <div class="stats-cards">
+                    <div class="stat-card" onclick="window.location.href=''">
+                        <div class="stat-icon posts">
+                            <i class="fas fa-newspaper"></i>
+                        </div>
+                        <div class="stat-number">24</div>
+                        <div class="stat-label">Total Posts</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon events">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="stat-number">8</div>
+                        <div class="stat-label">Upcoming Events</div>
+                    </div>
+                    <div class="stat-card" onclick="window.location.href='feedback-management.html'">
+                        <div class="stat-icon feedback">
+                            <i class="fas fa-comment-dots"></i>
+                        </div>
+                        <div class="stat-number">42</div>
+                        <div class="stat-label">Feedback Received</div>
+                    </div>
+                    
+                </div>
+
+                <div class="quick-actions">
+                    <h2 class="section-title">
+                        <i class="fas fa-bolt"></i>
+                        Quick Actions
+                    </h2>
+                    <div class="action-buttons">
+                        <a href="post.html" class="action-btn">
+                            <i class="fas fa-plus-circle"></i>
+                            <span class="action-label">Create Post</span>
+                        </a>
+                        <a href="society.html" class="action-btn">
+                            <i class="fas fa-calendar-plus"></i>
+                            <span class="action-label">Organize Event</span>
+                        </a>
+                        <a href="feedback-management.html" class="action-btn">
+                            <i class="fas fa-poll"></i>
+                            <span class="action-label">View Feedback</span>
+                        </a>
+                        <a href="sponsership.html" class="action-btn">
+                            <i class="fas fa-handshake"></i>
+                            <span class="action-label">Manage Sponsors</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="recent-activity">
+                    <h2 class="section-title">
+                        <i class="fas fa-history"></i>
+                        Recent Activity
+                    </h2>
+                    <ul class="activity-list">
+                        <li class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-newspaper"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">New post published: "Tech Workshop Announcement"</div>
+                                <div class="activity-time">2 hours ago</div>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-comment-dots"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">Received 5 feedback responses for "Hackathon 2023"</div>
+                                <div class="activity-time">Yesterday</div>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-handshake"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">New sponsor onboarded: TechCorp Inc.</div>
+                                <div class="activity-time">3 days ago</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        const themeText = themeToggle.querySelector('span');
+
+        // Check for saved theme preference or use preferred color scheme
+        const savedTheme = localStorage.getItem('theme') || 
+                         (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        updateThemeButton(savedTheme);
+
+        // Toggle theme on button click
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeButton(newTheme);
+        });
+
+        // Update button icon and text based on current theme
+        function updateThemeButton(theme) {
+            if (theme === 'dark') {
+                themeIcon.className = 'fas fa-sun';
+                themeText.textContent = 'Light Mode';
+            } else {
+                themeIcon.className = 'fas fa-moon';
+                themeText.textContent = 'Dark Mode';
+            }
+        }
+
+        // Simulate loading
+        document.addEventListener('DOMContentLoaded', function() {
+            // You can add any initialization code here
+            console.log('Dashboard loaded');
+        });
+    </script>
+</body>
+</html>
